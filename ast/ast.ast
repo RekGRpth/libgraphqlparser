@@ -24,6 +24,11 @@ O UnionTypeDefinition
 O EnumTypeDefinition
 O InputObjectTypeDefinition
 O TypeExtensionDefinition
+O ScalarTypeExtensionDefinition
+O InterfaceTypeExtensionDefinition
+O UnionTypeExtensionDefinition
+O EnumTypeExtensionDefinition
+O InputObjectTypeExtensionDefinition
 O DirectiveDefinition
 
 
@@ -196,6 +201,22 @@ P InputValueDefinition fields
 
 T TypeExtensionDefinition
 S ObjectTypeDefinition definition
+
+T ScalarTypeExtensionDefinition
+S ScalarTypeDefinition definition
+
+T InterfaceTypeExtensionDefinition
+S InterfaceTypeDefinition definition
+
+T UnionTypeExtensionDefinition
+S UnionTypeDefinition definition
+
+T EnumTypeExtensionDefinition
+S EnumTypeDefinition definition
+
+T InputObjectTypeExtensionDefinition
+S InputObjectTypeDefinition definition
+
 
 T DirectiveDefinition
 S Name name
