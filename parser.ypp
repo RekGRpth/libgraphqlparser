@@ -78,6 +78,11 @@ using facebook::graphql::ast::EnumTypeDefinition;
 using facebook::graphql::ast::EnumValueDefinition;
 using facebook::graphql::ast::InputObjectTypeDefinition;
 using facebook::graphql::ast::TypeExtensionDefinition;
+using facebook::graphql::ast::ScalarTypeExtensionDefinition;
+using facebook::graphql::ast::InterfaceTypeExtensionDefinition;
+using facebook::graphql::ast::UnionTypeExtensionDefinition;
+using facebook::graphql::ast::EnumTypeExtensionDefinition;
+using facebook::graphql::ast::InputObjectTypeExtensionDefinition;
 using facebook::graphql::ast::DirectiveDefinition;
 
 union yystype {                                         \
@@ -129,6 +134,11 @@ union yystype {                                         \
     EnumTypeDefinition *enumTypeDefinition;                         \
     InputObjectTypeDefinition *inputObjectTypeDefinition;           \
     TypeExtensionDefinition *typeExtensionDefinition;               \
+    ScalarTypeExtensionDefinition *scalarTypeExtensionDefinition;    \
+    InterfaceTypeExtensionDefinition *interfaceTypeExtensionDefinition; \
+    UnionTypeExtensionDefinition *unionTypeExtensionDefinition;      \
+    EnumTypeExtensionDefinition *enumTypeExtensionDefinition;        \
+    InputObjectTypeExtensionDefinition *inputObjectTypeExtensionDefinition; \
     DirectiveDefinition *directiveDefinition;                       \
     OperationTypeDefinition *operationTypeDefinition;               \
     InputValueDefinition *inputValueDefinition;                     \
@@ -270,6 +280,11 @@ union yystype {                                         \
 %type <enumTypeDefinition> enum_type_definition;
 %type <inputObjectTypeDefinition> input_object_type_definition;
 %type <typeExtensionDefinition> type_extension_definition;
+%type <scalarTypeExtensionDefinition> scalar_type_extension_definition;
+%type <interfaceTypeExtensionDefinition> interface_type_extension_definition;
+%type <unionTypeExtensionDefinition> union_type_extension_definition;
+%type <enumTypeExtensionDefinition> enum_type_extension_definition;
+%type <inputObjectTypeExtensionDefinition> input_object_type_extension_definition;
 %type <directiveDefinition> directive_definition;
 %type <operationTypeDefinition> operation_type_definition;
 %type <operationTypeDefinitionList> operation_type_definition_list;
@@ -360,6 +375,11 @@ schema_gate:    schema_definition { $$ = static_cast<Definition *>($1); }
         |       enum_type_definition { $$ = static_cast<Definition *>($1); }
         |       input_object_type_definition { $$ = static_cast<Definition *>($1); }
         |       type_extension_definition { $$ = static_cast<Definition *>($1); }
+        |       scalar_type_extension_definition { $$ = static_cast<Definition *>($1); }
+        |       interface_type_extension_definition { $$ = static_cast<Definition *>($1); }
+        |       union_type_extension_definition { $$ = static_cast<Definition *>($1); }
+        |       enum_type_extension_definition { $$ = static_cast<Definition *>($1); }
+        |       input_object_type_extension_definition { $$ = static_cast<Definition *>($1); }
         |       directive_definition { $$ = static_cast<Definition *>($1); }
         ;
 
@@ -667,6 +687,16 @@ input_object_type_definition: INPUT name directives_opt "{" input_value_definiti
 
 type_extension_definition: EXTEND object_type_definition { $$ = new TypeExtensionDefinition(@$, $2); }
                 ;
+scalar_type_extension_definition: EXTEND scalar_type_definition { $$ = new ScalarTypeExtensionDefinition(@$, $2); }
+                ; 
+interface_type_extension_definition: EXTEND interface_type_definition { $$ = new InterfaceTypeExtensionDefinition(@$, $2); }
+                ; 
+union_type_extension_definition: EXTEND union_type_definition { $$ = new UnionTypeExtensionDefinition(@$, $2); }
+                ; 
+enum_type_extension_definition: EXTEND enum_type_definition { $$ = new EnumTypeExtensionDefinition(@$, $2); }
+                ; 
+input_object_type_extension_definition: EXTEND input_object_type_definition { $$ = new InputObjectTypeExtensionDefinition(@$, $2); }
+                ; 
 
 directive_definition: DIRECTIVE "@" name arguments_definition_opt ON directive_locations { $$ = new DirectiveDefinition(@$, $3, $4, $6); }
                 ;
